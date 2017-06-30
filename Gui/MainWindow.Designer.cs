@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.DestDir_Label = new System.Windows.Forms.Label();
             this.DestDir_Input = new System.Windows.Forms.TextBox();
             this.DestDir_Button_Open = new System.Windows.Forms.Button();
@@ -43,7 +44,9 @@
             this.Title = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Length = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.StartedAt = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TracksSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.TracksGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TracksSource)).BeginInit();
             this.SuspendLayout();
             // 
             // DestDir_Label
@@ -66,6 +69,7 @@
             this.DestDir_Input.ReadOnly = true;
             this.DestDir_Input.Size = new System.Drawing.Size(474, 20);
             this.DestDir_Input.TabIndex = 0;
+            this.DestDir_Input.TabStop = false;
             // 
             // DestDir_Button_Open
             // 
@@ -141,6 +145,7 @@
             this.TracksGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.TracksGrid.AutoGenerateColumns = false;
             this.TracksGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.TracksGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.TracksGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -149,6 +154,7 @@
             this.Title,
             this.Length,
             this.StartedAt});
+            this.TracksGrid.DataSource = this.TracksSource;
             this.TracksGrid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.TracksGrid.Location = new System.Drawing.Point(12, 112);
             this.TracksGrid.MultiSelect = false;
@@ -219,6 +225,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Spofyp";
             ((System.ComponentModel.ISupportInitialize)(this.TracksGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TracksSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -241,5 +248,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Title;
         private System.Windows.Forms.DataGridViewTextBoxColumn Length;
         private System.Windows.Forms.DataGridViewTextBoxColumn StartedAt;
+        private System.Windows.Forms.BindingSource TracksSource;
     }
 }
