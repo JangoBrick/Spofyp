@@ -52,6 +52,9 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowTitleWatcher, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\WindowTitleWatcher.0.1.0.0\lib\net462\WindowTitleWatcher.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Gui\MainWindow.cs">
