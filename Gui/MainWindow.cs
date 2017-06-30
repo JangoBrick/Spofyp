@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using System;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
@@ -28,6 +30,26 @@ namespace Spofyp.Gui
             }
             TracksSource.DataSource = tracksData;
             TracksGrid.Sort(StartedAt, System.ComponentModel.ListSortDirection.Descending);
+        }
+
+        private void DestDir_Button_Choose_Click(object sender, EventArgs e)
+        {
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog()
+            {
+                InitialDirectory = DestDir_Input.Text,
+                IsFolderPicker = true,
+                RestoreDirectory = true,
+            };
+
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                DestDir_Input.Text = dialog.FileName;
+            }
+        }
+
+        private void DestDir_Button_Open_Click(object sender, EventArgs e)
+        {
+            Process.Start("explorer.exe", DestDir_Input.Text);
         }
     }
 }

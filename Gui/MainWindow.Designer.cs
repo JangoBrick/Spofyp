@@ -80,6 +80,7 @@
             this.DestDir_Button_Open.TabIndex = 6;
             this.DestDir_Button_Open.Text = "Open";
             this.DestDir_Button_Open.UseVisualStyleBackColor = true;
+            this.DestDir_Button_Open.Click += new System.EventHandler(this.DestDir_Button_Open_Click);
             // 
             // DestDir_Button_Choose
             // 
@@ -90,6 +91,7 @@
             this.DestDir_Button_Choose.TabIndex = 5;
             this.DestDir_Button_Choose.Text = "...";
             this.DestDir_Button_Choose.UseVisualStyleBackColor = true;
+            this.DestDir_Button_Choose.Click += new System.EventHandler(this.DestDir_Button_Choose_Click);
             // 
             // CurrentlyPlaying_Label
             // 
