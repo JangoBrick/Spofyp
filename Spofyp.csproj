@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Track.cs" />
+    <Compile Include="Core\TrackWatcher.cs" />
     <Compile Include="Gui\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
