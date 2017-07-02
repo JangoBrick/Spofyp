@@ -66,6 +66,7 @@
     <Compile Include="Core\Recorder.cs" />
     <Compile Include="Core\Recording.cs" />
     <Compile Include="Core\Track.cs" />
+    <Compile Include="Core\TrackRecordingEventArgs.cs" />
     <Compile Include="Core\TrackWatcher.cs" />
     <Compile Include="Gui\MainWindow.cs">
       <SubType>Form</SubType>

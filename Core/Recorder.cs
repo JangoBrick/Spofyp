@@ -30,6 +30,9 @@ namespace Spofyp.Core
 
         public event EventHandler RecordingStateChanged;
 
+        public event EventHandler<TrackRecordingEventArgs> TrackRecordingStarted;
+        public event EventHandler<TrackRecordingEventArgs> TrackRecordingFinished;
+
         public Recording CurrentRecording
         {
             get;
@@ -116,6 +119,8 @@ namespace Spofyp.Core
             CurrentRecording = new Recording(track, fileName);
 
             CurrentRecording.Start();
+
+            TrackRecordingStarted?.Invoke(this, new TrackRecordingEventArgs(CurrentRecording));
         }
 
         private string GetFileName(Track track)
@@ -130,8 +135,12 @@ namespace Spofyp.Core
                 return;
             }
 
+            var rec = CurrentRecording;
+
             CurrentRecording.Dispose();
             CurrentRecording = null;
+
+            TrackRecordingFinished?.Invoke(this, new TrackRecordingEventArgs(rec));
         }
     }
 }
