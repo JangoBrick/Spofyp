@@ -185,13 +185,15 @@ namespace Spofyp.Gui
                 TracksData.Rows.RemoveAt(TracksData.Rows.Count - 1);
             }
 
-            var state = rec.HasEnded ? "Done" : "Recording";
-            var artist = rec.Track.Artist;
-            var title = rec.Track.Title;
-            var length = rec.HasEnded ? rec.Length.ToString("mm\\:ss") : "";
-            var startedAt = rec.StartedAt;
+            DataRow row = TracksData.NewRow();
 
-            TracksData.Rows.Add(state, artist, title, length, startedAt);
+            row[Status.DataPropertyName] = rec.HasEnded ? "Done" : "Recording";
+            row[Artist.DataPropertyName] = rec.Track.Artist;
+            row[Title.DataPropertyName] = rec.Track.Title;
+            row[Length.DataPropertyName] = rec.HasEnded ? rec.Length.ToString("mm\\:ss") : "";
+            row[StartedAt.DataPropertyName] = rec.StartedAt;
+
+            TracksData.Rows.Add(row);
 
             TracksGrid.ClearSelection();
             TracksGrid.Rows[0].Selected = true;
