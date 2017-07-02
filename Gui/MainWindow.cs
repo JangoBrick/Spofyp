@@ -12,6 +12,7 @@ namespace Spofyp.Gui
     {
         private TrackWatcher Watcher;
         private Recorder Recorder;
+        private DataTable TracksData;
 
         public MainWindow()
         {
@@ -20,6 +21,8 @@ namespace Spofyp.Gui
             Load += MainWindow_Load;
             FormClosing += MainWindow_FormClosing;
         }
+
+        // FORM EVENTS
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
@@ -31,18 +34,20 @@ namespace Spofyp.Gui
             // init recorder
             Recorder = new Recorder(Watcher);
             Recorder.RecordingStateChanged += Recorder_RecordingStateChanged;
+            Recorder.TrackRecordingStarted += Recorder_TrackRecordingStarted;
+            Recorder.TrackRecordingFinished += Recorder_TrackRecordingFinished;
 
             // set dest dir value
             DestDir_Input.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), "Spofyp");
 
             // init tracks grid
-            var tracksData = new DataTable();
+            TracksData = new DataTable();
             foreach (DataGridViewColumn col in TracksGrid.Columns)
             {
-                tracksData.Columns.Add(col.Name);
+                TracksData.Columns.Add(col.Name);
                 col.DataPropertyName = col.Name;
             }
-            TracksSource.DataSource = tracksData;
+            TracksSource.DataSource = TracksData;
             TracksGrid.Sort(StartedAt, System.ComponentModel.ListSortDirection.Descending);
 
             // update state
@@ -54,6 +59,8 @@ namespace Spofyp.Gui
             Watcher.Dispose();
             Recorder.Dispose();
         }
+
+        // TRACK CHANGE EVENT
 
         private void Watcher_TrackChange(object sender, EventArgs e)
         {
@@ -77,6 +84,8 @@ namespace Spofyp.Gui
             }
         }
 
+        // DESTINATION DIRECTORY EVENTS
+
         private void DestDir_Button_Choose_Click(object sender, EventArgs e)
         {
             CommonOpenFileDialog dialog = new CommonOpenFileDialog()
@@ -96,6 +105,8 @@ namespace Spofyp.Gui
         {
             Process.Start("explorer.exe", DestDir_Input.Text);
         }
+
+        // RECORDING BUTTON EVENTS, STATE MANAGEMENT
 
         private void Record_Button_Once_Click(object sender, EventArgs e)
         {
@@ -147,6 +158,43 @@ namespace Spofyp.Gui
                     Record_Button_Once.Focus();
                 }
             }
+        }
+
+        // RECORDER TRACK EVENTS
+
+        private void Recorder_TrackRecordingStarted(object sender, TrackRecordingEventArgs e)
+        {
+            AddToTrackList(e.Recording, false);
+        }
+
+        private void Recorder_TrackRecordingFinished(object sender, TrackRecordingEventArgs e)
+        {
+            AddToTrackList(e.Recording, true);
+        }
+
+        private void AddToTrackList(Recording rec, bool replace)
+        {
+            if (TracksGrid.InvokeRequired)
+            {
+                Invoke(new Action<Recording, bool>(AddToTrackList), new object[] { rec, replace });
+                return;
+            }
+
+            if (replace && TracksData.Rows.Count > 0)
+            {
+                TracksData.Rows.RemoveAt(TracksData.Rows.Count - 1);
+            }
+
+            var state = rec.HasEnded ? "Done" : "Recording";
+            var artist = rec.Track.Artist;
+            var title = rec.Track.Title;
+            var length = rec.HasEnded ? rec.Length.ToString("mm\\:ss") : "";
+            var startedAt = rec.StartedAt;
+
+            TracksData.Rows.Add(state, artist, title, length, startedAt);
+
+            TracksGrid.ClearSelection();
+            TracksGrid.Rows[0].Selected = true;
         }
     }
 }
