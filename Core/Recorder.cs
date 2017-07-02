@@ -25,7 +25,7 @@ namespace Spofyp.Core
                 }
             }
         }
-        private bool RecordAll;
+        public bool RecordAll;
         private string DirectoryName;
 
         public event EventHandler RecordingStateChanged;

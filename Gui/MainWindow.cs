@@ -133,6 +133,20 @@ namespace Spofyp.Gui
             Record_Button_Stop.Enabled = recording;
 
             DestDir_Button_Choose.Enabled = !recording;
+
+            if (recording)
+            {
+                Record_Button_Stop.Focus();
+            } else
+            {
+                if (Recorder.RecordAll)
+                {
+                    Record_Button_All.Focus();
+                } else
+                {
+                    Record_Button_Once.Focus();
+                }
+            }
         }
     }
 }
