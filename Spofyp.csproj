@@ -63,6 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Recorder.cs" />
     <Compile Include="Core\Recording.cs" />
     <Compile Include="Core\Track.cs" />
     <Compile Include="Core\TrackWatcher.cs" />
