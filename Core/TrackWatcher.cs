@@ -4,7 +4,7 @@ using WindowTitleWatcher.Util;
 
 namespace Spofyp.Core
 {
-    public class TrackWatcher
+    public class TrackWatcher : IDisposable
     {
         private RecurrentWatcher watcher;
 
@@ -20,6 +20,11 @@ namespace Spofyp.Core
             watcher = new RecurrentWatcher(() => Windows.FindFirst(IsMatchingWindow));
             Update(watcher.Title);
             watcher.TitleChanged += Watcher_TitleChanged;
+        }
+
+        public void Dispose()
+        {
+            watcher.Dispose();
         }
 
         private void Watcher_TitleChanged(object sender, TitleEventArgs e)

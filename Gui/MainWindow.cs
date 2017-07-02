@@ -10,21 +10,22 @@ namespace Spofyp.Gui
 {
     public partial class MainWindow : Form
     {
-        private TrackWatcher watcher;
+        private TrackWatcher Watcher;
 
         public MainWindow()
         {
             InitializeComponent();
 
             Load += MainWindow_Load;
+            FormClosing += MainWindow_FormClosing;
         }
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
             // init watcher
-            watcher = new TrackWatcher();
-            UpdateCurrentlyPlaying(watcher.CurrentTrack);
-            watcher.TrackChange += Watcher_TrackChange;
+            Watcher = new TrackWatcher();
+            UpdateCurrentlyPlaying(Watcher.CurrentTrack);
+            Watcher.TrackChange += Watcher_TrackChange;
 
             // set dest dir value
             DestDir_Input.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), "Spofyp");
@@ -40,9 +41,15 @@ namespace Spofyp.Gui
             TracksGrid.Sort(StartedAt, System.ComponentModel.ListSortDirection.Descending);
         }
 
+        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Watcher.Dispose();
+            Recorder.Dispose();
+        }
+
         private void Watcher_TrackChange(object sender, EventArgs e)
         {
-            UpdateCurrentlyPlaying(watcher.CurrentTrack);
+            UpdateCurrentlyPlaying(Watcher.CurrentTrack);
         }
 
         private void UpdateCurrentlyPlaying(Track track)
