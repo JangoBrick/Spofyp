@@ -7,13 +7,28 @@ namespace Spofyp.Core
     {
         private readonly TrackWatcher Watcher;
 
+        private bool _isRecording;
         public bool IsRecording
         {
-            get;
-            private set;
+            get
+            {
+                return _isRecording;
+            }
+            private set
+            {
+                bool was = _isRecording;
+                _isRecording = value;
+
+                if (was != _isRecording)
+                {
+                    RecordingStateChanged?.Invoke(this, EventArgs.Empty);
+                }
+            }
         }
         private bool RecordAll;
         private string DirectoryName;
+
+        public event EventHandler RecordingStateChanged;
 
         public Recording CurrentRecording
         {
