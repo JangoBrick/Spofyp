@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.DestDir_Label = new System.Windows.Forms.Label();
             this.DestDir_Input = new System.Windows.Forms.TextBox();
             this.DestDir_Button_Open = new System.Windows.Forms.Button();
@@ -226,6 +227,7 @@
             this.Controls.Add(this.DestDir_Button_Open);
             this.Controls.Add(this.DestDir_Input);
             this.Controls.Add(this.DestDir_Label);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Spofyp";
