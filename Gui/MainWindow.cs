@@ -11,6 +11,7 @@ namespace Spofyp.Gui
     public partial class MainWindow : Form
     {
         private TrackWatcher Watcher;
+        private Recorder Recorder;
 
         public MainWindow()
         {
@@ -27,6 +28,10 @@ namespace Spofyp.Gui
             UpdateCurrentlyPlaying(Watcher.CurrentTrack);
             Watcher.TrackChange += Watcher_TrackChange;
 
+            // init recorder
+            Recorder = new Recorder(Watcher);
+            Recorder.RecordingStateChanged += Recorder_RecordingStateChanged;
+
             // set dest dir value
             DestDir_Input.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), "Spofyp");
 
@@ -39,6 +44,9 @@ namespace Spofyp.Gui
             }
             TracksSource.DataSource = tracksData;
             TracksGrid.Sort(StartedAt, System.ComponentModel.ListSortDirection.Descending);
+
+            // update state
+            UpdateRecordingState();
         }
 
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
@@ -87,6 +95,44 @@ namespace Spofyp.Gui
         private void DestDir_Button_Open_Click(object sender, EventArgs e)
         {
             Process.Start("explorer.exe", DestDir_Input.Text);
+        }
+
+        private void Record_Button_Once_Click(object sender, EventArgs e)
+        {
+            Recorder.StartRecording(false, DestDir_Input.Text);
+        }
+
+        private void Record_Button_All_Click(object sender, EventArgs e)
+        {
+            Recorder.StartRecording(true, DestDir_Input.Text);
+        }
+
+        private void Record_Button_Stop_Click(object sender, EventArgs e)
+        {
+            Recorder.StopRecording();
+        }
+
+        private void Recorder_RecordingStateChanged(object sender, EventArgs e)
+        {
+            UpdateRecordingState();
+        }
+
+        private void UpdateRecordingState()
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(UpdateRecordingState));
+                return;
+            }
+
+            bool recording = Recorder.IsRecording;
+
+            Record_Button_Once.Enabled = !recording;
+            Record_Button_All.Enabled = !recording;
+
+            Record_Button_Stop.Enabled = recording;
+
+            DestDir_Button_Choose.Enabled = !recording;
         }
     }
 }

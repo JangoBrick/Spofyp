@@ -119,6 +119,7 @@
             this.Record_Button_Once.TabIndex = 1;
             this.Record_Button_Once.Text = "Record once";
             this.Record_Button_Once.UseVisualStyleBackColor = true;
+            this.Record_Button_Once.Click += new System.EventHandler(this.Record_Button_Once_Click);
             // 
             // Record_Button_All
             // 
@@ -128,6 +129,7 @@
             this.Record_Button_All.TabIndex = 2;
             this.Record_Button_All.Text = "Record all";
             this.Record_Button_All.UseVisualStyleBackColor = true;
+            this.Record_Button_All.Click += new System.EventHandler(this.Record_Button_All_Click);
             // 
             // Record_Button_Stop
             // 
@@ -137,6 +139,7 @@
             this.Record_Button_Stop.TabIndex = 3;
             this.Record_Button_Stop.Text = "Stop recording";
             this.Record_Button_Stop.UseVisualStyleBackColor = true;
+            this.Record_Button_Stop.Click += new System.EventHandler(this.Record_Button_Stop_Click);
             // 
             // TracksGrid
             // 
