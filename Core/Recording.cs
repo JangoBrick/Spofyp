@@ -8,9 +8,37 @@ namespace Spofyp.Core
         public readonly Track Track;
         public readonly string FileName;
 
+        public DateTime StartedAt
+        {
+            get;
+            private set;
+        }
+        public DateTime EndedAt
+        {
+            get;
+            private set;
+        }
+        public TimeSpan Length
+        {
+            get
+            {
+                return EndedAt != null ? (EndedAt - StartedAt) : TimeSpan.Zero;
+            }
+        }
+
         private WasapiLoopbackCapture Capture;
         private WaveFileWriter Writer;
-        private bool IsRunning, HasEnded;
+
+        public bool IsRunning
+        {
+            get;
+            private set;
+        }
+        public bool HasEnded
+        {
+            get;
+            private set;
+        }
 
         public Recording(Track track, string fileName)
         {
@@ -40,6 +68,8 @@ namespace Spofyp.Core
             Writer = new WaveFileWriter(FileName, Capture.WaveFormat);
 
             Capture.StartRecording();
+
+            StartedAt = DateTime.UtcNow;
         }
 
         /// <summary>
@@ -60,6 +90,8 @@ namespace Spofyp.Core
 
             Capture.Dispose();
             Writer.Dispose();
+
+            EndedAt = DateTime.UtcNow;
         }
 
         private void Capture_DataAvailable(object sender, WaveInEventArgs e)
