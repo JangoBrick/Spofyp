@@ -195,8 +195,12 @@ namespace Spofyp.Gui
 
             TracksData.Rows.Add(row);
 
+            // select most recent track
             TracksGrid.ClearSelection();
             TracksGrid.Rows[0].Selected = true;
+
+            // scroll to top
+            TracksGrid.FirstDisplayedScrollingRowIndex = 0;
         }
     }
 }
