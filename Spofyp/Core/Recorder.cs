@@ -125,7 +125,13 @@ namespace Spofyp.Core
 
         private string GetFileName(Track track)
         {
-            return Path.Combine(DirectoryName, track.Artist + " - " + track.Title + ".wav");
+            string name = track.Artist + " - " + track.Title + ".wav";
+            foreach (char c in Path.GetInvalidFileNameChars())
+            {
+                name = name.Replace(c, '_');
+            }
+
+            return Path.Combine(DirectoryName, name);
         }
 
         private void StopCurrentRecording()
