@@ -64,7 +64,7 @@ namespace Spofyp.Core
 
         private bool IsMatchingWindow(WindowInfo window)
         {
-            if (!window.IsVisible)
+            if (!window.IsVisible || window.Title == "")
             {
                 return false;
             }
