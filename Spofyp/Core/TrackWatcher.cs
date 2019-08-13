@@ -55,7 +55,7 @@ namespace Spofyp.Core
             {
                 return null;
             }
-            
+
             string artist = title.Substring(0, index);
             string name = title.Substring(index + 3);
 
